@@ -9,11 +9,8 @@ if (!ArgsAreValid(args))
 }
 
 
-// Loan amount, RUB
 var sum = double.Parse(args[0]);
-// Annual percentage rate
 var rate = double.Parse(args[1]) / 12 / 100;
-// Number of months of the loan
 var term = int.Parse(args[2]);
 
 
