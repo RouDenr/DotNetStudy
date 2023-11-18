@@ -50,7 +50,6 @@ foreach (var name in names)
 					Print(string.Format(helloMessage, name));
 					return;
 				case expectedUserInputNo:
-					Print(notFoundMessage);
 					break;
 				default:
 					isUserInputValid = false;
@@ -58,7 +57,8 @@ foreach (var name in names)
 			}
 		}
 	}
-}
+} 
+Print(notFoundMessage);
 
 return;
 
