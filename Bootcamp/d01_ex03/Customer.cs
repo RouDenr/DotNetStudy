@@ -1,11 +1,16 @@
 ﻿namespace d01_ex03;
 
-public class Customer(string name, int id)
+public class Customer
 {
-	private int Id { get; } = id;
-	private string Name { get; } = name;
+	private int Id { get; } 
+	private string Name { get; }
 	public int GoodsCount { get; private set; } = 0;
 	
+	public Customer(string name, int id)
+	{
+		Id = id;
+		Name = name;
+	}
 	
 	public void FillCart(int maxGoodsCount)
 	{

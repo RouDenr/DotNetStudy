@@ -1,10 +1,15 @@
 ﻿namespace d01_ex01;
 
-public class Customer(string name, int id)
+public class Customer
 {
-	private int Id { get; } = id;
-	private string Name { get; } = name;
+	private int Id { get; } 
+	private string Name { get; } 
 
+	public Customer(string name, int id)
+	{
+		Id = id;
+		Name = name;
+	}
 	public override string ToString()
 	{
 		return new string($"{Name}, customer #{Id}");

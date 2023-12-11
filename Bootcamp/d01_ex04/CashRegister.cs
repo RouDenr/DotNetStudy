@@ -1,10 +1,15 @@
 ﻿namespace d01_ex04;
 
-public class CashRegister(string header)
+public class CashRegister
 {
-	private string Header { get; } = header;
+	private string Header { get; }
 	private Queue<Customer> Customers { get; } = new();
 	
+	public CashRegister(string header)
+	{
+		Header = header;
+	}
+
 	public void AddCustomer(Customer customer)
 	{
 		Customers.Enqueue(customer);
