@@ -1,44 +1,37 @@
+
+using TodoIpi.Weather;
+
+// Создаём новый экземпляр билдера приложения с передачей аргументов командной строки
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Добавляем в контейнер сервисы для работы с API
 builder.Services.AddEndpointsApiExplorer();
+
+// Добавляем в контейнер сервисы для работы со Swagger для описания и документирования API
+// Дополнительную информацию о настройке Swagger/OpenAPI можно найти тут: https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+// Строим приложение из билдера
+builder.Services.AddSingleton<IWeatherForecastGenerator, WeatherForecastGenerator>();
+WebApplication app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Добавляем конфигурацию промежуточного программного обеспечения (middleware)
 if (app.Environment.IsDevelopment())
 {
+    // Если приложение в режиме разработки, то используем Swagger для автогенерации документации API
     app.UseSwagger();
+    // И специальный UI для просмотра этой документации
     app.UseSwaggerUI();
 }
 
+// Все HTTP запросы будут автоматически переадресовываться на HTTPS
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+// Определяем HTTP GET запрос по пути "/weatherforecast" 
+app.MapGet("/weatherforecast", (IWeatherForecastGenerator forecastGenerator) => forecastGenerator.Generate())
+.WithName("GetWeatherForecast") // Даем имя этому маршруту
+.WithOpenApi(); // И открываем его в OpenAPI 
 
+// Запуск приложения
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
