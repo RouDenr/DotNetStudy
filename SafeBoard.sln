@@ -29,6 +29,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "d01_ex04", "Bootcamp\d01_ex04\d01_ex04.csproj", "{64D273D3-846A-44EB-BD23-B915D34043A3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Avalonia", "Avalonia", "{61980DBE-78D9-42EE-A434-742AA8423144}"
+	ProjectSection(SolutionItems) = preProject
+		Avalonia\Task.md = Avalonia\Task.md
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoIpi", "Avalonia\TodoIpi\TodoIpi.csproj", "{2159648F-D6D1-4F75-938E-FEC924F65D42}"
 EndProject
