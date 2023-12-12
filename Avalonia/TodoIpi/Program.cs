@@ -1,13 +1,24 @@
-
-using TodoIpi.ConfigureServices;
+using TodoIpi.TaskLogic;
 
 // Создаём новый экземпляр билдера приложения с передачей аргументов командной строки
 var builder = WebApplication.CreateBuilder(args);
-Startup startup = new();
-startup.ConfigureServices(builder.Services);
+builder.Services.AddControllers();
+builder.Services.AddDbContext<TaskContext>();
+
+if (builder.Environment.IsDevelopment())
+{
+	builder.Services.AddSwaggerGen();
+}
 
 WebApplication app = builder.Build();
-startup.Configure(app, builder.Environment);
+
+if (builder.Environment.IsDevelopment())
+{
+	app.UseSwagger();
+	app.UseSwaggerUI();
+}
 
 // Запуск приложения
+app.UseHttpsRedirection();
+app.MapControllers();
 app.Run();
