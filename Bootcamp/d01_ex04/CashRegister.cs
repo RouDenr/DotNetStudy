@@ -4,7 +4,7 @@ public class CashRegister(string header)
 {
 	private string Header { get; } = header;
 	private Queue<Customer> Customers { get; } = new();
-
+	
 	public void AddCustomer(Customer customer)
 	{
 		Customers.Enqueue(customer);
