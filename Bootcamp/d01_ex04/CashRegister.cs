@@ -4,7 +4,7 @@ public class CashRegister(string header)
 {
 	private string Header { get; } = header;
 	private Queue<Customer> Customers { get; } = new();
-	
+
 	public void AddCustomer(Customer customer)
 	{
 		Customers.Enqueue(customer);
@@ -14,6 +14,8 @@ public class CashRegister(string header)
 	{
 		return Customers.TryDequeue(out var customer) ? customer : null;
 	}
+	public int CustomerCount => Customers.Count;
+	public int GoodsCount => Customers.Sum(customer => customer.GoodsCount);
 	
 	#region	standard methods
 

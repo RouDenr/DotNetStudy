@@ -4,8 +4,8 @@ namespace d01_ex04;
 
 public class Store
 {
-	private Storage Storage { get; set; }
-	private CashRegister[] CashRegisters { get; set; }
+	private Storage Storage { get; }
+	public CashRegister[] CashRegisters { get; }
 	
 	public Store(int capacity, int cashRegistersCount)
 	{
@@ -17,7 +17,6 @@ public class Store
 			CashRegisters[i] = new CashRegister($"Register #{i + 1}");
 		}
 	}
-	
 	
 	public bool IsOpen => !Storage.IsEmpty;
 }
