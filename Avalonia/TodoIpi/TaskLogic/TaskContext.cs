@@ -16,9 +16,8 @@ public class TaskContext : DbContext
 			connect.EnableSensitiveDataLogging();
 			if (connect.IsConfigured)
 			{
-				var context = new TaskContext();
-				context.Database.EnsureDeleted();
-				context.Database.EnsureCreated();
+				Database.EnsureDeleted();
+				Database.EnsureCreated();
 			}
 			else
 			{

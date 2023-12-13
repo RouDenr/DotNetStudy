@@ -1,0 +1,60 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TaskApp.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+        x:Class="TaskApp.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="TaskApp">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <TabControl>
+        <!-- Все задачи -->
+        <TabItem Header="All">
+            <StackPanel>
+                <TextBlock Text="All tasks"/>
+                <ListBox ItemsSource="{Binding Tasks}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </TabItem>
+        
+        <!-- Поиск задачи --> 
+        <TabItem Header="Search">
+            <StackPanel>
+                <TextBlock Text="Search task"/>
+                <TextBox Text="{Binding SearchText}"/>
+                <ListBox ItemsSource="{Binding SearchResults}"/>
+            </StackPanel>
+        </TabItem>
+        <!-- Добавление задачи -->
+        <TabItem Header="Add">
+            <StackPanel>
+                <TextBlock Text="Add task"/>
+                <TextBox Text="{Binding NewTaskText}"/>
+                <Button Command="{Binding AddTaskCommand}" Content="Add"/>
+            </StackPanel>
+        </TabItem>
+        <!-- Удаление задачи -->
+        <TabItem Header="Remove">
+            <StackPanel>
+                <TextBlock Text="Remove task"/>
+                <ListBox ItemsSource="{Binding Tasks}"/>
+                <Button Command="{Binding RemoveTaskCommand}" Content="Remove"/>
+            </StackPanel>
+        </TabItem>
+        
+        
+    </TabControl>
+</Window>

@@ -20,7 +20,7 @@ public class TaskController : ControllerBase
 		return await _context.Tasks.ToListAsync();
 	}
 	
-	[HttpGet("{id}")]
+	[HttpGet("task{id}")]
 	public async Task<ActionResult<TaskItem>> GetTask(int id)
 	{
 		var task = await _context.Tasks.FindAsync(id);
