@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Avalonia.Styling;
 using ReactiveUI;
+using TaskApp.ViewModels.Api;
+using TaskApp.ViewModels.Commands;
 
 namespace TaskApp.ViewModels;
 
@@ -21,6 +24,7 @@ public class MainWindowViewModel : ViewModelBase
 		set => Set(ref _tasks, value);
 		
 	}
+
 	public string SearchText
 	{
 		get => _searchText;
@@ -44,29 +48,9 @@ public class MainWindowViewModel : ViewModelBase
 	{
 		Tasks =
 		[
-			new TaskItem
-			{
-				Id = 1,
-				Title = "Task 1",
-				Description = "Description 1",
-				IsComplete = false
-			},
-
-			new TaskItem
-			{
-				Id = 2,
-				Title = "Task 2",
-				Description = "Description 2",
-				IsComplete = false
-			},
-
-			new TaskItem
-			{
-				Id = 3,
-				Title = "Task 3",
-				Description = "Description 3",
-				IsComplete = false
-			}
+			new TaskItem(1, "Task 1", "Description 1", false),
+			new TaskItem(2, "Task 2", "Description 2", false),
+			new TaskItem(3, "Task 3", "Description 3", false),
 		];
 	}
 	

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace TaskApp.ViewModels;
+namespace TaskApp.ViewModels.Commands;
 
 public class RemoveCommand : ICommand
 {
