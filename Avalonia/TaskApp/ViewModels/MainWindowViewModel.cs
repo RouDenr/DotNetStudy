@@ -5,7 +5,8 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Avalonia.Styling;
 using ReactiveUI;
-using TaskApp.ViewModels.Api;
+using TaskApp.Models;
+using TaskApp.Models.ApiClient;
 using TaskApp.ViewModels.Commands;
 
 namespace TaskApp.ViewModels;
@@ -13,16 +14,23 @@ namespace TaskApp.ViewModels;
 public class MainWindowViewModel : ViewModelBase
 {
 	
-	private ObservableCollection<TaskItem> _tasks = new();
+	private ObservableCollection<TaskItem>? _tasks = new();
+	private TaskItem _selectedTask;
+	
 	private string _searchText = "";
 	private string _searchResults = "";
 	
 	
-	public ObservableCollection<TaskItem> Tasks
+	public ObservableCollection<TaskItem>? Tasks
 	{
 		get => _tasks;
 		set => Set(ref _tasks, value);
 		
+	}
+	public TaskItem SelectedTask
+	{
+		get => _selectedTask;
+		set => Set(ref _selectedTask, value);
 	}
 
 	public string SearchText
@@ -46,17 +54,44 @@ public class MainWindowViewModel : ViewModelBase
 
 	public MainWindowViewModel()
 	{
-		Tasks =
-		[
-			new TaskItem(1, "Task 1", "Description 1", false),
-			new TaskItem(2, "Task 2", "Description 2", false),
-			new TaskItem(3, "Task 3", "Description 3", false),
-		];
+		UpdateTaskCommand = new RelayCommand(LoadTasks, (o => true));
+		RemoveTaskCommand = new RelayCommand(RemoveTask, (o => true));
+	}
+
+	private void RemoveTask(object? obj)
+	{
+		if (obj is not TaskItem task) return;
+		
+		RemoveTask(task);
+	}
+
+	private void LoadTasks(object? obj)
+	{
+		LoadTasks();
+	}
+
+	private async void RemoveTask(TaskItem task)
+	{
+		await Request.DeleteTask(task.Id);
+		LoadTasks();
 	}
 	
+	private async void LoadTasks()
+	{
+		ObservableCollection<TaskItem>? loadedTasks = await Request.GetTasks();
+
+		if (loadedTasks != null)
+		{
+			Tasks = new ObservableCollection<TaskItem>(loadedTasks);
+		}
+		else
+		{
+			// Handle the case where loading tasks failed
+			Console.WriteLine("Failed to load tasks from the API.");
+		}
+	}
 #pragma warning disable CA1822 // Mark members as static
-	public string Greeting => "Welcome to Avalonia!";
-	public ICommand AddTaskCommand { get; } = new AddCommand();
-	public ICommand RemoveTaskCommand { get; } = new RemoveCommand();
+	public ICommand UpdateTaskCommand { get; }
+	public ICommand RemoveTaskCommand { get; }
 #pragma warning restore CA1822 // Mark members as static
 }

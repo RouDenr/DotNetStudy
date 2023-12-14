@@ -20,13 +20,28 @@
         <TabItem Header="All">
             <StackPanel>
                 <TextBlock Text="All tasks"/>
-                <ListBox ItemsSource="{Binding Tasks}">
+                <ListBox ItemsSource="{Binding Tasks}" 
+                         SelectedItem="{Binding SelectedTask}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Title}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox IsChecked="{Binding IsDone}" Grid.Column="0"/>
+                                <TextBlock Text="{Binding Title}" Grid.Column="1" Margin="5,0,0,0"/>
+                                <TextBlock Text="{Binding Description}" Grid.Column="2" Margin="5,0,0,0"/>
+                            </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+                <Button Command="{Binding UpdateTaskCommand}" Content="Update"/>
+                <TextBlock Text="Remove task"/>
+                <Button Command="{Binding RemoveTaskCommand}"
+                        Content="Remove"
+                        CommandParameter="{Binding SelectedTask}"/>
             </StackPanel>
         </TabItem>
         
@@ -43,15 +58,12 @@
             <StackPanel>
                 <TextBlock Text="Add task"/>
                 <TextBox Text="{Binding NewTaskText}"/>
-                <Button Command="{Binding AddTaskCommand}" Content="Add"/>
             </StackPanel>
         </TabItem>
         <!-- Удаление задачи -->
         <TabItem Header="Remove">
             <StackPanel>
-                <TextBlock Text="Remove task"/>
                 <ListBox ItemsSource="{Binding Tasks}"/>
-                <Button Command="{Binding RemoveTaskCommand}" Content="Remove"/>
             </StackPanel>
         </TabItem>
         
