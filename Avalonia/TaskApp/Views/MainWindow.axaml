@@ -10,19 +10,19 @@
         Title="TaskApp">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
+        <vm:MainWindowViewModel />
     </Design.DataContext>
 
     <TabControl>
-        <!-- Все задачи -->
-        <TextBox Text="{Binding SearchText}"/>
+        <!-- All Tasks Tab -->
         <TabItem Header="All">
-            <StackPanel>
-                <TextBlock Text="All tasks"/>
-                <ListBox ItemsSource="{Binding Tasks}" 
-                         SelectedItem="{Binding SelectedTask}">
+            <StackPanel Margin="10">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <TextBox Text="{Binding SearchText}" Width="150" Margin="0,0,10,0"/>
+                    <Button Content="Search" Command="{Binding SearchCommand}"/>
+                </StackPanel>
+                <TextBlock Text="All tasks" Margin="0,0,0,10"/>
+                <ListBox ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedTask}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -31,38 +31,31 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <CheckBox 
-                                    IsEnabled="False"
-                                    IsChecked="{Binding IsDone}" Grid.Column="0"/>
+                                <CheckBox IsEnabled="False" IsChecked="{Binding IsDone}" Grid.Column="0"/>
                                 <TextBlock Text="{Binding Title}" Grid.Column="1" Margin="5,0,0,0"/>
                                 <TextBlock Text="{Binding Description}" Grid.Column="2" Margin="5,0,0,0"/>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <Button Command="{Binding UpdateTaskCommand}" Content="Update"/>
-                <TextBlock Text="Remove task"/>
-                <Button Command="{Binding RemoveTaskCommand}"
-                        Content="Remove"
-                        CommandParameter="{Binding SelectedTask}"/>
-                <TextBlock Text="Switch task"/>
-                <Button Command="{Binding SwitchTaskCommand}"
-                        Content="Switch"
-                        CommandParameter="{Binding SelectedTask}"/>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <Button Command="{Binding UpdateTaskCommand}" Content="Update" Margin="0,0,10,0"/>
+                    <Button Command="{Binding RemoveTaskCommand}" Content="Remove" CommandParameter="{Binding SelectedTask}" Margin="0,0,10,0"/>
+                    <Button Command="{Binding SwitchTaskCommand}" Content="Switch" CommandParameter="{Binding SelectedTask}"/>
+                </StackPanel>
             </StackPanel>
         </TabItem>
-        
-        <!-- Добавление задачи -->
+
+        <!-- Add Task Tab -->
         <TabItem Header="Add">
-            <StackPanel>
-                <TextBlock Text="Add task"/>
-                <TextBlock Text="Title:"/>
-                <TextBox Text="{Binding NewTaskTitle}"/>
-                <TextBlock Text="Description:"/>
-                <TextBox Text="{Binding NewTaskDescription}"/>
+            <StackPanel Margin="10">
+                <TextBlock Text="Add task" Margin="0,0,0,10"/>
+                <TextBlock Text="Title:" Margin="0,0,0,5"/>
+                <TextBox Text="{Binding NewTaskTitle}" Margin="0,0,0,10"/>
+                <TextBlock Text="Description:" Margin="0,0,0,5"/>
+                <TextBox Text="{Binding NewTaskDescription}" Margin="0,0,0,10"/>
                 <Button Command="{Binding AddTaskCommand}" Content="Add"/>
             </StackPanel>
         </TabItem>
-        
     </TabControl>
 </Window>

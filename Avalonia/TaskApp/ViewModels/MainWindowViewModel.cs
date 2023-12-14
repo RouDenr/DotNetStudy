@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using TaskApp.Models;
 using TaskApp.Models.ApiClient;
@@ -14,8 +16,6 @@ public class MainWindowViewModel : ViewModelBase
 	private TaskItem? _selectedTask;
 	
 	private string _searchText = "";
-	private string _searchResults = "";
-	
 	
 	public ObservableCollection<TaskItem>? Tasks
 	{
@@ -33,12 +33,6 @@ public class MainWindowViewModel : ViewModelBase
 	{
 		get => _searchText;
 		set => Set(ref _searchText, value);
-	}
-
-	public string SearchResults
-	{
-		get => _searchResults;
-		set => Set(ref _searchResults, value);
 	}
 	private string _newTaskTitle = "";
 	public string NewTaskTitle
@@ -62,6 +56,18 @@ public class MainWindowViewModel : ViewModelBase
 		UpdateTaskCommand = new RelayCommand(LoadTasks, (_ => true));
 		RemoveTaskCommand = new RelayCommand(RemoveTask, (_ => true));
 		SwitchTaskCommand = new RelayCommand(SwitchTask, (_ => true));
+		SearchCommand = new RelayCommand(SearchTask, (_ => true));
+		LoadTasks();
+	}
+
+	private async void SearchTask(object? obj)
+	{
+		await LoadTasks();
+		if (SearchText == "") return;
+
+		Console.WriteLine($"Searching for {SearchText}");
+		if (Tasks != null)
+			Tasks = new ObservableCollection<TaskItem>(Tasks.Where(task => task.Title.Contains(SearchText)));
 	}
 
 	private void SwitchTask(object? obj)
@@ -95,23 +101,23 @@ public class MainWindowViewModel : ViewModelBase
 		
 		await Request.PutTask(id, task);
 		Console.WriteLine($"Updated task with id {id}");
-		LoadTasks();
+		await LoadTasks();
 	}
 	
 	private async void CreateTask()
 	{
 		TaskItem newTask = new(0, NewTaskTitle, NewTaskDescription, false);
 		await Request.PostTask(newTask);
-		LoadTasks();
+		await LoadTasks();
 	}
 	
 	private async void RemoveTask(TaskItem task)
 	{
 		await Request.DeleteTask(task.Id);
-		LoadTasks();
+		await LoadTasks();
 	}
 	
-	private async void LoadTasks()
+	private async Task LoadTasks()
 	{
 		ObservableCollection<TaskItem>? loadedTasks = await Request.GetTasks();
 
@@ -130,5 +136,6 @@ public class MainWindowViewModel : ViewModelBase
 	public ICommand RemoveTaskCommand { get; }
 	public ICommand AddTaskCommand { get; }
 	public ICommand SwitchTaskCommand { get; }
+	public ICommand SearchCommand { get; }
 #pragma warning restore CA1822 // Mark members as static
 }
