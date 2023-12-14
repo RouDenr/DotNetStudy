@@ -16,7 +16,7 @@ public class RelayCommand(Action<object?> execute, Func<object?, bool> canExecut
 		return canExecute(parameter);
 	}
 	
-	public async void Execute(object? parameter)
+	public void Execute(object? parameter)
 	{
 		_execute(parameter);
 	}

@@ -17,6 +17,7 @@
 
     <TabControl>
         <!-- Все задачи -->
+        <TextBox Text="{Binding SearchText}"/>
         <TabItem Header="All">
             <StackPanel>
                 <TextBlock Text="All tasks"/>
@@ -30,7 +31,9 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <CheckBox IsChecked="{Binding IsDone}" Grid.Column="0"/>
+                                <CheckBox 
+                                    IsEnabled="False"
+                                    IsChecked="{Binding IsDone}" Grid.Column="0"/>
                                 <TextBlock Text="{Binding Title}" Grid.Column="1" Margin="5,0,0,0"/>
                                 <TextBlock Text="{Binding Description}" Grid.Column="2" Margin="5,0,0,0"/>
                             </Grid>
@@ -42,22 +45,20 @@
                 <Button Command="{Binding RemoveTaskCommand}"
                         Content="Remove"
                         CommandParameter="{Binding SelectedTask}"/>
+                <TextBlock Text="Switch task"/>
+                <Button Command="{Binding SwitchTaskCommand}"
+                        Content="Switch"
+                        CommandParameter="{Binding SelectedTask}"/>
             </StackPanel>
         </TabItem>
         
-        <!-- Поиск задачи --> 
-        <TabItem Header="Search">
-            <StackPanel>
-                <TextBlock Text="Search task"/>
-                <TextBox Text="{Binding SearchText}"/>
-                <ListBox ItemsSource="{Binding SearchResults}"/>
-            </StackPanel>
-        </TabItem>
         <!-- Добавление задачи -->
         <TabItem Header="Add">
             <StackPanel>
                 <TextBlock Text="Add task"/>
+                <TextBlock Text="Title:"/>
                 <TextBox Text="{Binding NewTaskTitle}"/>
+                <TextBlock Text="Description:"/>
                 <TextBox Text="{Binding NewTaskDescription}"/>
                 <Button Command="{Binding AddTaskCommand}" Content="Add"/>
             </StackPanel>

@@ -77,21 +77,23 @@ public static class Request
 	}
 	
 	// PUT: api/Task/{id}
-	public static async Task<TaskItem?> PutTask(int id, TaskItem taskItem)
+	public static async Task PutTask(int id, TaskItem taskItem)
 	{
 		using var client = ClientFactory.CreateHttpClient(Url);
 		
-		var response = await client.PutAsync($"api/Task/{id}", new StringContent(JsonSerializer.Serialize(taskItem)));
+		var response = await client.PutAsync($"api/Task/{id}", new StringContent(JsonSerializer.Serialize(taskItem),
+			Encoding.UTF8,
+			"application/json"));
 
-		if (!response.IsSuccessStatusCode) return null;
+		if (!response.IsSuccessStatusCode)
+		{
+			Console.WriteLine($"Error: {response.StatusCode}");
+			return;
+		}
 		
 		var data = await response.Content.ReadAsStringAsync();
 		Console.WriteLine(data);
-		TaskItem? responseTaskItem = JsonSerializer.Deserialize<TaskItem>(data);
-		
-		if (responseTaskItem == null) return null;
-		
-		return responseTaskItem;
+		// TaskItem? responseTaskItem = JsonSerializer.Deserialize<TaskItem>(data);
 	}
 	
 	// DELETE: api/Task/{id}

@@ -48,7 +48,12 @@ public class MainWindowViewModel : ViewModelBase
 	}
 	
 	private string _newTaskDescription = "";
-	public string NewTaskDescription { get => _newTaskDescription; set => Set(ref _newTaskDescription, value); }
+
+	public string NewTaskDescription
+	{
+		get => _newTaskDescription; 
+		set => Set(ref _newTaskDescription, value);
+	}
 
 	public MainWindowViewModel()
 	{
@@ -56,6 +61,15 @@ public class MainWindowViewModel : ViewModelBase
 		AddTaskCommand = new RelayCommand(CreateTask, (_ => true));
 		UpdateTaskCommand = new RelayCommand(LoadTasks, (_ => true));
 		RemoveTaskCommand = new RelayCommand(RemoveTask, (_ => true));
+		SwitchTaskCommand = new RelayCommand(SwitchTask, (_ => true));
+	}
+
+	private void SwitchTask(object? obj)
+	{
+		if (obj is not TaskItem task) return;
+		
+		task.IsDone = !task.IsDone;
+		UpdateTask(task.Id, task);
 	}
 
 	private void RemoveTask(object? obj)
@@ -75,6 +89,15 @@ public class MainWindowViewModel : ViewModelBase
 		CreateTask();
 	}
 
+	private async void UpdateTask(int id, TaskItem task)
+	{
+		if (task.Id != id) return;
+		
+		await Request.PutTask(id, task);
+		Console.WriteLine($"Updated task with id {id}");
+		LoadTasks();
+	}
+	
 	private async void CreateTask()
 	{
 		TaskItem newTask = new(0, NewTaskTitle, NewTaskDescription, false);
@@ -106,5 +129,6 @@ public class MainWindowViewModel : ViewModelBase
 	public ICommand UpdateTaskCommand { get; }
 	public ICommand RemoveTaskCommand { get; }
 	public ICommand AddTaskCommand { get; }
+	public ICommand SwitchTaskCommand { get; }
 #pragma warning restore CA1822 // Mark members as static
 }
