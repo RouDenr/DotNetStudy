@@ -16,20 +16,13 @@ public sealed class TaskItem : INotifyPropertyChanged
 		Description = description;
 		IsComplete = isComplete;
 	}
-	
-	public TaskItem(Request.ResponseTaskItem responseTaskItem)
-	{
-		Id = responseTaskItem.id;
-		Title = responseTaskItem.title;
-		Description = responseTaskItem.description;
-		IsComplete = responseTaskItem.isDone;
-	}
 
 	#region Properties
 	private int _id;
 	private string _title = "";
 	private string _description = "";
 	private bool _isComplete;
+    
 	[JsonPropertyName("id")]
 	public int Id
 	{

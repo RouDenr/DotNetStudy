@@ -11,28 +11,14 @@ namespace TaskApp.ViewModels.Api;
 
 public static class Request
 {
-	private const string Url = "https://localhost:7063/api/Task";
-
-	[Serializable]
-	public struct ResponseTaskItem
-	{
-		public int id;
-		public string title;
-		[JsonPropertyName("description")]
-		public string description;
-		[JsonPropertyName("isDone")]
-		public bool isDone;
-	}
+	private const string Url = "https://localhost:7063/";
+	private static readonly IHttpClientFactory ClientFactory = new CustomHttpClientFactory();
 	
 	public static async Task<List<TaskItem>?> GetTasks()
 	{
-		using var handler = new HttpClientHandler();
-		handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+		using var client = ClientFactory.CreateHttpClient(Url);
 		
-		using var client = new HttpClient(handler);
-		
-		
-		var response = await client.GetAsync(Url);
+		var response = await client.GetAsync("api/Task");
 
 		if (!response.IsSuccessStatusCode) return null;
 		
