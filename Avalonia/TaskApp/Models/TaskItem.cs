@@ -3,25 +3,25 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 
-namespace TaskApp.ViewModels.Api;
+namespace TaskApp.Models;
 
 public sealed class TaskItem : INotifyPropertyChanged
 {
 	
 	[JsonConstructor]
-	public TaskItem(int id, string title, string description, bool isComplete)
+	public TaskItem(int id, string title, string description, bool isDone)
 	{
 		Id = id;
 		Title = title;
 		Description = description;
-		IsComplete = isComplete;
+		IsDone = isDone;
 	}
 
 	#region Properties
 	private int _id;
 	private string _title = "";
 	private string _description = "";
-	private bool _isComplete;
+	private bool _isDone;
     
 	[JsonPropertyName("id")]
 	public int Id
@@ -42,10 +42,10 @@ public sealed class TaskItem : INotifyPropertyChanged
 		set => Set(ref _description, value);
 	}
 	[JsonPropertyName("isDone")]
-	public bool IsComplete
+	public bool IsDone
 	{
-		get => _isComplete;
-		set => Set(ref _isComplete, value);
+		get => _isDone;
+		set => Set(ref _isDone, value);
 	}
 	#endregion
 	

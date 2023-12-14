@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 
-namespace TaskApp.ViewModels.Api;
+namespace TaskApp.Models.ApiClient;
 
 public class CustomHttpClientFactory : IHttpClientFactory
 {

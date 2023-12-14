@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace TaskApp.ViewModels.Api;
+namespace TaskApp.Models.ApiClient;
 
 public interface IHttpClientFactory
 {
