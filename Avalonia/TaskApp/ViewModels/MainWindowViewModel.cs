@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Avalonia.Styling;
-using ReactiveUI;
 using TaskApp.Models;
 using TaskApp.Models.ApiClient;
 using TaskApp.ViewModels.Commands;
@@ -15,7 +11,7 @@ public class MainWindowViewModel : ViewModelBase
 {
 	
 	private ObservableCollection<TaskItem>? _tasks = new();
-	private TaskItem _selectedTask;
+	private TaskItem? _selectedTask;
 	
 	private string _searchText = "";
 	private string _searchResults = "";
@@ -27,7 +23,7 @@ public class MainWindowViewModel : ViewModelBase
 		set => Set(ref _tasks, value);
 		
 	}
-	public TaskItem SelectedTask
+	public TaskItem? SelectedTask
 	{
 		get => _selectedTask;
 		set => Set(ref _selectedTask, value);
@@ -44,18 +40,22 @@ public class MainWindowViewModel : ViewModelBase
 		get => _searchResults;
 		set => Set(ref _searchResults, value);
 	}
-
-	private string _newTaskText = "";
-	public string NewTaskText
+	private string _newTaskTitle = "";
+	public string NewTaskTitle
 	{
-		get => _newTaskText;
-		set => Set(ref _newTaskText, value);
+		get => _newTaskTitle;
+		set => Set(ref _newTaskTitle, value);
 	}
+	
+	private string _newTaskDescription = "";
+	public string NewTaskDescription { get => _newTaskDescription; set => Set(ref _newTaskDescription, value); }
 
 	public MainWindowViewModel()
 	{
-		UpdateTaskCommand = new RelayCommand(LoadTasks, (o => true));
-		RemoveTaskCommand = new RelayCommand(RemoveTask, (o => true));
+		SelectedTask = null;
+		AddTaskCommand = new RelayCommand(CreateTask, (_ => true));
+		UpdateTaskCommand = new RelayCommand(LoadTasks, (_ => true));
+		RemoveTaskCommand = new RelayCommand(RemoveTask, (_ => true));
 	}
 
 	private void RemoveTask(object? obj)
@@ -69,7 +69,19 @@ public class MainWindowViewModel : ViewModelBase
 	{
 		LoadTasks();
 	}
+	
+	private void CreateTask(object? obj)
+	{
+		CreateTask();
+	}
 
+	private async void CreateTask()
+	{
+		TaskItem newTask = new(0, NewTaskTitle, NewTaskDescription, false);
+		await Request.PostTask(newTask);
+		LoadTasks();
+	}
+	
 	private async void RemoveTask(TaskItem task)
 	{
 		await Request.DeleteTask(task.Id);
@@ -93,5 +105,6 @@ public class MainWindowViewModel : ViewModelBase
 #pragma warning disable CA1822 // Mark members as static
 	public ICommand UpdateTaskCommand { get; }
 	public ICommand RemoveTaskCommand { get; }
+	public ICommand AddTaskCommand { get; }
 #pragma warning restore CA1822 // Mark members as static
 }

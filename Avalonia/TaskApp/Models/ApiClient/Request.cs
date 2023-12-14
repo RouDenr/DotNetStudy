@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -53,9 +54,18 @@ public static class Request
 	{
 		using var client = ClientFactory.CreateHttpClient(Url);
 		
-		var response = await client.PostAsync("api/Task", new StringContent(JsonSerializer.Serialize(taskItem)));
+		var json = JsonSerializer.Serialize(taskItem);
+		Console.WriteLine(json);
+		
+		var response = await client.PostAsync("api/Task", new StringContent(JsonSerializer.Serialize(taskItem),
+			Encoding.UTF8,
+			"application/json"));
 
-		if (!response.IsSuccessStatusCode) return null;
+		if (!response.IsSuccessStatusCode)
+		{
+			Console.WriteLine($"Error: {response.StatusCode}");
+			return null;
+		}
 		
 		var data = await response.Content.ReadAsStringAsync();
 		Console.WriteLine(data);
