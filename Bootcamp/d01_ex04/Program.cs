@@ -7,6 +7,7 @@ try
 	Test(TestSameCustomer);
 	Test(TestDifferentCustomer);
 	Test(TestCreateRandomCard);
+	Test(Test25RandomCards);
 	Test(TestSameCashRegister);
 	Test(TestDifferentCashRegister);
 	Test(TestCashRegisterWithMinCustomers);
@@ -73,6 +74,21 @@ bool TestCreateRandomCard()
 	}
 	Console.WriteLine("Goods count is out of range");
 	return false;
+}
+
+bool Test25RandomCards()
+{
+	var customers = new Customer[25];
+	for (int i = 0; i < customers.Length; i++)
+	{
+		customers[i] = new Customer($"Customer #{i + 1}", i + 1);
+		customers[i].FillCart(15);
+		if (customers[i].GoodsCount is > 0 and <= 15) continue;
+		
+		Console.WriteLine("Goods count is out of range");
+		return false;
+	}
+	return true;
 }
 
 bool TestSameCashRegister()

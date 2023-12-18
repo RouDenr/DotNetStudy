@@ -15,7 +15,9 @@ public class Customer
 	
 	public void FillCart(int maxGoodsCount)
 	{
-		GoodsCount = new Random().Next(maxGoodsCount);
+		// random number from 1 to maxGoodsCount
+		GoodsCount = new Random().Next(maxGoodsCount) + 1;
+		
 	}
 	
 

@@ -2,8 +2,8 @@
 
 public class Storage
 {
-	private int Goods { get; set; }
-	private int Capacity { get; set; }
+	public int Goods { get; private set; }
+	public int Capacity { get; private set; }
 	
 	public Storage(int capacity)
 	{
