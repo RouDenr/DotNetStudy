@@ -13,11 +13,15 @@ public class Customer
 		Name = name;
 	}
 	
-	public void FillCart(int maxGoodsCount)
+	public void FillCart(int maxGoodsCount, Storage storage)
 	{
-		// random number from 1 to maxGoodsCount
-		GoodsCount = new Random().Next(maxGoodsCount) + 1;
+		if (GoodsCount >= maxGoodsCount || storage.IsEmpty)
+		{
+			return;
+		}
 		
+		int goodsCount = new Random().Next(1, maxGoodsCount - GoodsCount + 1);
+		GoodsCount = storage.TakeGoods(goodsCount);
 	}
 	
 

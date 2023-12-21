@@ -50,23 +50,21 @@ bool TestCreateRandomCard()
 	var customer2 = new Customer("Bob", 2);
 	var customer3 = new Customer("Charlie", 3);
 	
+	Storage storage = new Storage(45, 45);
 	
-	customer.FillCart(15);
-	Console.WriteLine(customer);
+	customer.FillCart(15, storage);
 	if (customer.GoodsCount is <= 0 or > 15)
 	{
 		Console.WriteLine("Goods count is out of range");
 		return false;
 	}
-	customer2.FillCart(15);
-	Console.WriteLine(customer2);
+	customer2.FillCart(15, storage);
 	if (customer2.GoodsCount is <= 0 or > 15)
 	{
 		Console.WriteLine("Goods count is out of range");
 		return false;
 	}
-	customer3.FillCart(15);
-	Console.WriteLine(customer3);
+	customer3.FillCart(15, storage);
 	
 	if (customer3.GoodsCount is > 0 and <= 15)
 	{
@@ -82,7 +80,7 @@ bool Test25RandomCards()
 	for (int i = 0; i < customers.Length; i++)
 	{
 		customers[i] = new Customer($"Customer #{i + 1}", i + 1);
-		customers[i].FillCart(15);
+		customers[i].FillCart(15, new Storage(45, 45));
 		if (customers[i].GoodsCount is > 0 and <= 15) continue;
 		
 		Console.WriteLine("Goods count is out of range");
