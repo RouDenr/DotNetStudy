@@ -3,7 +3,7 @@
 public class Storage
 {
 	public int Goods { get; private set; }
-	public int Capacity { get; private set; }
+	private int Capacity { get;  set; }
 	
 	public Storage(int capacity)
 	{
@@ -30,6 +30,16 @@ public class Storage
 		
 		Capacity = capacity;
 		Goods = Math.Min(goods, capacity);
+	}
+	
+	public void AddGoods(int goodsCount)
+	{
+		if (goodsCount <= 0)
+		{
+			throw new ArgumentException("Goods count must be greater than 0");
+		}
+		
+		Goods = Math.Min(goodsCount + Goods, Capacity);
 	}
 	
 	public int TakeGoods(int goodsCount)

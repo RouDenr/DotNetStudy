@@ -11,6 +11,8 @@ try
 	Test(TestSameCashRegister);
 	Test(TestDifferentCashRegister);
 	Test(TestCashRegisterWithMinCustomers);
+	Test(TestStoreWithMinCustomerStrategy);
+	Test(TestStoreWithMinGoodsStrategy);
 }
 catch (Exception e)
 {
@@ -50,21 +52,19 @@ bool TestCreateRandomCard()
 	var customer2 = new Customer("Bob", 2);
 	var customer3 = new Customer("Charlie", 3);
 	
-	Storage storage = new Storage(45, 45);
-	
-	customer.FillCart(15, storage);
+	customer.FillCart(15);
 	if (customer.GoodsCount is <= 0 or > 15)
 	{
 		Console.WriteLine("Goods count is out of range");
 		return false;
 	}
-	customer2.FillCart(15, storage);
+	customer2.FillCart(15);
 	if (customer2.GoodsCount is <= 0 or > 15)
 	{
 		Console.WriteLine("Goods count is out of range");
 		return false;
 	}
-	customer3.FillCart(15, storage);
+	customer3.FillCart(15);
 	
 	if (customer3.GoodsCount is > 0 and <= 15)
 	{
@@ -80,7 +80,7 @@ bool Test25RandomCards()
 	for (int i = 0; i < customers.Length; i++)
 	{
 		customers[i] = new Customer($"Customer #{i + 1}", i + 1);
-		customers[i].FillCart(15, new Storage(45, 45));
+		customers[i].FillCart(15);
 		if (customers[i].GoodsCount is > 0 and <= 15) continue;
 		
 		Console.WriteLine("Goods count is out of range");
@@ -141,9 +141,88 @@ bool TestCashRegisterWithMinCustomers()
 	var minQueue = CustomerExtensions.CashRegisterWithMinCustomers(cashRegisters);
 	return minQueue == cashRegister2;
 }
+
+bool TestStoreWithMinCustomerStrategy()
+{
+	Store store = new Store(40, 3, 7, 10);
+	Customer[] customers = new Customer[]
+	{
+		new ("Andrew", 1),
+		new ("Bob", 2),
+		new ("Charlie", 3),
+		new ("David", 4),
+		new ("Ethan", 5),
+		new ("Frank", 6),
+		new ("George", 7),
+		new ("Henry", 8),
+		new ("Ivan", 9),
+		new ("Jack", 10),
+	};
+
+	try
+	{
+		foreach (var customer in customers)
+		{
+			store.Enter(customer,
+				CustomerExtensions.CashRegisterWithMinCustomers(store.CashRegisters));
+		}
+
+		while (store.IsOpen)
+		{
+			store.Next();
+		}
+	}
+	catch (Exception e)
+	{
+		Console.WriteLine(e);
+		throw;
+		
+	}
+
+	return true;
+}
 	
-	
-	
+bool TestStoreWithMinGoodsStrategy()
+{
+	Store store = new Store(40, 3, 7, 10);
+	Customer[] customers = new Customer[]
+	{
+		new ("Andrew", 1),
+		new ("Bob", 2),
+		new ("Charlie", 3),
+		new ("David", 4),
+		new ("Ethan", 5),
+		new ("Frank", 6),
+		new ("George", 7),
+		new ("Henry", 8),
+		new ("Ivan", 9),
+		new ("Jack", 10),
+	};
+
+	try
+	{
+		foreach (var customer in customers)
+		{
+			store.Enter(customer,
+				CustomerExtensions.CashRegisterWithMinGoods(store.CashRegisters));
+		}
+
+		while (store.IsOpen)
+		{
+			store.Next();
+		}
+	}
+	catch (Exception e)
+	{
+		Console.WriteLine(e);
+		throw;
+		
+	}
+
+	return true;
+}
+
+
 void Test(Func<bool> testFunc)
 {
 	if (testFunc())

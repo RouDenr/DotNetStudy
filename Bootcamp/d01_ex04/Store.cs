@@ -4,7 +4,7 @@ namespace d01_ex04;
 
 public class Store
 {
-	private CashRegister[] CashRegisters { get; }
+	public CashRegister[] CashRegisters { get; }
 	private List<Customer> Customers { get; }
 	private Storage Storage { get; }
 	private int MaxGoodsCount { get; }
@@ -33,6 +33,7 @@ public class Store
 			CashRegisters[i] = new CashRegister($"Register #{i + 1}");
 		}
 		Customers = new List<Customer>();
+		Storage.AddGoods(capacity);
 		
 	}
 	
@@ -68,9 +69,50 @@ public class Store
 			return;
 		}
 		
-		customer.FillCart(MaxGoodsCount, Storage);
+		customer.FillCart(MaxGoodsCount);
 		cashRegister.AddCustomer(customer);
+		Customers.Add(customer);
+		
+		// Andrew, Customer #4 (6 items in cart) - Register #1 (4 people with 20 items behind)
+		Console.WriteLine($"{customer.Name}, Customer #{customer.Id} ({customer.GoodsCount} items in cart)" +
+		                  $" - {cashRegister} ({cashRegister.CustomerCount} people with {cashRegister.GoodsCount} items behind)");
 	}
 	
-	public bool IsOpen => !Storage.IsEmpty || Customers.Count > 0;
+	public void Next()
+	{
+		if (Customers.Count == 0)
+		{
+			return;
+		}
+
+		foreach (var register in CashRegisters)
+		{
+			var customer = register.GetCustomer();
+			
+			if (customer is null)
+			{
+				continue;
+			}
+			customer.Pay(Storage.TakeGoods(customer.GoodsCount));
+			
+			if (customer.GoodsCount > 0)
+			{
+				// Andrew, Customer #4 (2 items left in cart)
+				Console.WriteLine($"{customer.Name} Customer #{customer.Id}," +
+				                  $" ({customer.GoodsCount} items left in cart)");
+			}
+			Customers.Remove(customer);
+		}
+	}
+
+	public bool IsOpen => Customers.Count > 0 || (!Storage.IsEmpty && Customers.Count > 0);
+
+	#region	standard methods
+
+	public override string ToString()
+	{
+		return $"Store with {CashRegisters.Length} cash registers, {Customers.Count} customers and {Storage.Goods} goods in storage";
+	}
+
+	#endregion
 }

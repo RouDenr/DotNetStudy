@@ -2,8 +2,8 @@
 
 public class Customer
 {
-	private int Id { get; }
-	private string Name { get; }
+	public int Id { get; }
+	public string Name { get; }
 	public int GoodsCount { get; private set; } = 0;
 	
 	
@@ -13,18 +13,26 @@ public class Customer
 		Name = name;
 	}
 	
-	public void FillCart(int maxGoodsCount, Storage storage)
+	public void FillCart(int maxGoodsCount)
 	{
-		if (GoodsCount >= maxGoodsCount || storage.IsEmpty)
+		if (GoodsCount >= maxGoodsCount)
 		{
 			return;
 		}
 		
-		int goodsCount = new Random().Next(1, maxGoodsCount - GoodsCount + 1);
-		GoodsCount = storage.TakeGoods(goodsCount);
+		GoodsCount = new Random().Next(1, maxGoodsCount - GoodsCount + 1);
+	}
+
+	public void Pay(int goodsCount)
+	{
+		if (goodsCount < 0)
+		{
+			throw new ArgumentException("Goods count must be greater than 0");
+		}
+		
+		GoodsCount -= goodsCount;
 	}
 	
-
 	#region standard methods
 	public override string ToString()
 	{
