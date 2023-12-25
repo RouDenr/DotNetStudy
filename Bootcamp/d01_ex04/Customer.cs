@@ -4,7 +4,7 @@ public class Customer
 {
 	public int Id { get; }
 	public string Name { get; }
-	public int GoodsCount { get; private set; } = 0;
+	public int GoodsCount { get; private set; }
 	
 	
 	public Customer(string name, int id)

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace d01_ex04;
+﻿namespace d01_ex04;
 
 public class Store
 {
