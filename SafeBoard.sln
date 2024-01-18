@@ -36,6 +36,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "d_02", "d_02", "{9902EDF2-5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "d02_ex00", "Bootcamp\d02\d02_ex00\d02_ex00.csproj", "{A9215CD3-E07D-4F2F-A746-20C582E0EE83}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiParser", "ApiParser", "{A8875728-8227-4646-AEC9-FD44329E8145}"
+	ProjectSection(SolutionItems) = preProject
+		ApiParser\readme.md = ApiParser\readme.md
+		ApiParser\Server.puml = ApiParser\Server.puml
+		ApiParser\Client.puml = ApiParser\Client.puml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
