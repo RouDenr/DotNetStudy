@@ -41,6 +41,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiParser", "ApiParser", "{
 		ApiParser\readme.md = ApiParser\readme.md
 		ApiParser\Server.puml = ApiParser\Server.puml
 		ApiParser\Client.puml = ApiParser\Client.puml
+		ApiParser\conf.json = ApiParser\conf.json
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerModel", "ApiParser\ServerModel\ServerModel.csproj", "{E33984C5-270D-4156-A291-AF4ED157A248}"
