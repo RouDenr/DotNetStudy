@@ -53,6 +53,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerModel", "TcpParserAva
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TcpParserAvalon\TestProject\TestProject.csproj", "{7C4C066C-81AA-42F7-ACA0-4F80F4D8E069}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegisterApp", "RegisterApp\RegisterApp.csproj", "{3AECCA20-AA08-4DC2-94CE-2D73165786B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{7C4C066C-81AA-42F7-ACA0-4F80F4D8E069}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C4C066C-81AA-42F7-ACA0-4F80F4D8E069}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C4C066C-81AA-42F7-ACA0-4F80F4D8E069}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AECCA20-AA08-4DC2-94CE-2D73165786B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AECCA20-AA08-4DC2-94CE-2D73165786B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AECCA20-AA08-4DC2-94CE-2D73165786B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AECCA20-AA08-4DC2-94CE-2D73165786B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5CB45EF6-085B-4EAB-B816-219E4D74EE56} = {80211619-DC93-4A03-918B-8C4BAA2BA427}
