@@ -2,5 +2,5 @@
 
 public class WrongPasswordException : Exception
 {
-	public override string Message { get; } = "User already exists";
+	public override string Message { get; } = "Wrong password";
 }
