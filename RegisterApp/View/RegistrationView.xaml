@@ -14,7 +14,6 @@
             >
 
             
-            <!-- Style for TextBox -->
             <StackPanel.Resources>
                 <Style TargetType="TextBox">
                     <Setter Property="BorderThickness" Value="0,0,0,1"/>
@@ -23,7 +22,6 @@
                     <Setter Property="IsEnabled" Value="{Binding InputEnabled}"/>
                 </Style>
                 
-                <!-- Style for PasswordBox -->
                 <Style TargetType="components:BindablePasswordBox">
                     <Setter Property="BorderThickness" Value="0,0,0,1"/>
                     <Setter Property="BorderBrush" Value="Black"/>

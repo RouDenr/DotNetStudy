@@ -25,11 +25,6 @@ namespace RegisterApp.ViewModel
             {
                 ErrorMessage = e.Message;
             }
-            finally
-            {
-                Password = string.Empty;
-                ErrorMessage = "Success";
-            }
 
             InputEnabled = true;
         }
