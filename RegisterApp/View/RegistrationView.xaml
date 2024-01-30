@@ -20,7 +20,6 @@
                 Margin="0,0,0,20"
                 />
 
-            <!--Логин-->
             <TextBlock Text="Логин"
                           FontSize="20"
                           HorizontalAlignment="Center"
@@ -33,7 +32,6 @@
                          Margin="0,0,0,10"
                          />
 
-            <!--Пароль-->
             <TextBlock Text="Пароль"
                           FontSize="20"
                           HorizontalAlignment="Center"
@@ -46,7 +44,6 @@
                                              Margin="0,0,0,10"
                                              />
 
-            <!--Кнопка-->
             <Button Content="Зарегистрироваться"
                         FontSize="20"
                         HorizontalAlignment="Center"
@@ -55,6 +52,13 @@
                         Command="{Binding RegistrationCommand}"
                         />
 
+            
+            <TextBlock Text="{Binding ErrorMessage}"
+                          FontSize="20"
+                          Foreground="Red"
+                          HorizontalAlignment="Center"
+                          Margin="0,0,0,10"
+                />
 
         </StackPanel>
     </Grid>

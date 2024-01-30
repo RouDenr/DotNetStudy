@@ -1,47 +1,41 @@
 ﻿// Entity Framework
 
+using NLog;
 using RegisterApp.Model;
 
 namespace RegisterApp.Model
 {
 
-    public class Registration
+    public static class Registration
 	{
-		// DB connection
-		public Registration()
-		{
-            // DB connection
-            
-            
-        }
 
-		public void Register(string login, string password)
+		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+		
+		public static void Register(string login, string password)
 		{
-			using var db = new UserDbContext();
+			Logger.Info($"Registering user {login}");
 			
-			byte[] salt = GenerateSalt();
-			var passwordHash = GeneratePasswordHash(password, salt);
+			
+			using var db = new UserDbContext();
+			db.Database.EnsureCreated();
+			
+			bool isUserExists = db.Users.Any(user => user.Login == login);
+			if (isUserExists)
+			{
+				Logger.Info($"User {login} already exists");
+				throw new UserAlreadyExistsException();
+			}
+			
+			byte[] salt = UserDbContext.GenerateSalt();
+			var passwordHash = UserDbContext.GeneratePasswordHash(password, salt);
 
 			var user = new User { Login = login, Password = passwordHash, Salt = salt };
 
 			db.Users.Add(user);
 			db.SaveChanges();
+			
+			Logger.Info($"User {login} registered");
 		}
 
-		private static byte[] GenerateSalt()
-		{
-			var buff = new byte[32];
-			
-			using var rng = System.Security.Cryptography.RandomNumberGenerator.Create();
-			rng.GetBytes(buff);
-			
-			return buff;
-		}
-		
-		private static byte[] GeneratePasswordHash(string password, byte[] salt)
-		{
-			// Hash the password and encode the parameters.
-			return new System.Security.Cryptography.Rfc2898DeriveBytes(password, salt, 10000).GetBytes(32);
-		}
 	}
 }

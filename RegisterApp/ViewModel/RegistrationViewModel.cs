@@ -9,9 +9,11 @@ namespace RegisterApp.ViewModel
         
 		private string _login = string.Empty;
 		private string _password = string.Empty;
+		private string _errorMessage = string.Empty;
         
 		public string Login { get => _login; set => RaiseAndSetIfChanged(ref _login, value, nameof(Login)); }
 		public string Password { get => _password; set => RaiseAndSetIfChanged(ref _password, value, nameof(Password)); }
+		public string ErrorMessage { get => _errorMessage; set => RaiseAndSetIfChanged(ref _errorMessage, value, nameof(ErrorMessage)); }
 
 		public ICommand RegistrationCommand { get; }
 
@@ -26,10 +28,13 @@ namespace RegisterApp.ViewModel
 	        {
 		        Registration.Register(Login, Password);
 	        }
+	        catch (UserAlreadyExistsException)
+	        {
+		        ErrorMessage = "User already exists";
+	        }
 	        catch (Exception e)
 	        {
-		        Console.WriteLine(e);
-		        throw;
+		        ErrorMessage = e.Message;
 	        }
         }
     }
