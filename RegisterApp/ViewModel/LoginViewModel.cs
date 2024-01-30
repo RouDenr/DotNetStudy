@@ -10,8 +10,30 @@ namespace RegisterApp.ViewModel
         
         public LoginViewModel()
         {
-            
+            LoginCommand = new RelayCommand(LoginUser);
         }
+
+        private void LoginUser(object obj)
+        {
+            InputEnabled = false;
+            try
+            {
+                Model.LoginUser.Login(Login, Password);
+                OnLoginEvent();
+            }
+            catch (Exception e)
+            {
+                ErrorMessage = e.Message;
+            }
+            finally
+            {
+                Password = string.Empty;
+                ErrorMessage = "Success";
+            }
+
+            InputEnabled = true;
+        }
+
 
         protected virtual void OnLoginEvent()
         {
