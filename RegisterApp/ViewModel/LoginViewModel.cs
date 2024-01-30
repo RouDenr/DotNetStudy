@@ -1,17 +1,12 @@
-﻿using RegisterApp.ViewModel;
+﻿using System.Windows.Input;
+using RegisterApp.ViewModel;
 
 namespace RegisterApp.ViewModel
 {
-    public class LoginViewModel : ViewModelBase
+    public class LoginViewModel : UserInputViewModel
     {
         public event Action LoginEvent;
-        
-        private string _login = string.Empty;
-        private string _password = string.Empty;
-        
-        public string Login { get => _login; set => RaiseAndSetIfChanged(ref _login, value, nameof(Login)); }
-        public string Password { get => _password; set => RaiseAndSetIfChanged(ref _password, value, nameof(Password)); }
-        
+        public ICommand LoginCommand { get; }
         
         public LoginViewModel()
         {
