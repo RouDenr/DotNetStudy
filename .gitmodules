@@ -1,3 +1,6 @@
 [submodule "TcpParserAvalon"]
 	path = TcpParserAvalon
 	url = git@github.com:RouDenr/TcpParserAvalon.git
+[submodule "ElectricDreamASPMarket"]
+	path = ElectricDreamASPMarket
+	url = git@github.com:RouDenr/ElectricDreamASPMarket.git
