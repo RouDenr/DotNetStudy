@@ -11,5 +11,7 @@ public class Trip
 	public DateTime ArrivalTime { get; set; }
 	public decimal TicketPrice { get; set; }
 	public string TicketClass { get; set; }
+
+	public int PassengerCapacity { get; set; }
 	// Другие поля по вашему выбору
 }
