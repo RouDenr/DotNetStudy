@@ -99,7 +99,7 @@ public class LinqTests
             },
             new PassengerTrip
             {
-                Id = 4, TripId = 4, PassengerId = 1, SeatNumber = "D4", TicketPrice = 250, TicketClass = "Business",
+                Id = 4, TripId = 4, PassengerId = 2, SeatNumber = "D4", TicketPrice = 250, TicketClass = "Business",
                 BoardingTime = new DateTime(2023, 9, 10, 10, 0, 0)
             },
             new PassengerTrip
@@ -199,7 +199,7 @@ public class LinqTests
     public void Task5_ReturnPassengerWithMostExpensiveTicket()
     {
         var result = _modelFunctions.GetPassengerWithMostExpensiveTicket();
-        Assert.Equal("John Smith", result.Name);
+        Assert.Equal("Max Müller", result.Name);
     }
 
     /// <summary>
@@ -221,7 +221,8 @@ public class LinqTests
     public void Task7_ReturnPassengersWithTicketsForCompany()
     {
         var result = _modelFunctions.GetPassengersWithTicketsForCompany("SkyHigh Airlines");
-        Assert.Equal(2, result.Count);
+        var expected = new List<string> {"John Smith", "Emma Johnson"};
+        Assert.Equal(expected, result.Select(p => p.Name).ToList());
     }
     
     
@@ -245,7 +246,8 @@ public class LinqTests
     public void Task8_ReturnPassengerWithMostTrips()
     {
         var result = _modelFunctions.GetPassengerWithMostTrips();
-        Assert.Equal("John Smith", result.Name);
+        const string expected = "Emma Johnson";
+        Assert.Equal(expected, result.Name);
     }
     
     /// <summary>
