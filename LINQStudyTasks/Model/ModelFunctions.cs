@@ -11,39 +11,90 @@ public class ModelFunctions(
 	private List<PassengerTrip> passengerTrips = passengerTrips;
 	private List<Passenger> passengers = passengers;
 
-	public List<Company> GetCompaniesFromCountry(string country)
+	
+	/// <summary>
+	/// Возвращает список компаний из указанной страны
+	/// </summary>
+	/// <param name="country"></param>
+	/// <returns></returns>
+	public IEnumerable<Company> GetCompaniesFromCountry(string country)
 	{
-		throw new NotImplementedException();
+		return companies.Where(company => company.Country == country).ToList();
 	}
 
-	public List<Trip> GetTripsFromCityToCity(string departureCity, string arrivalCity)
+	
+	/// <summary>
+	/// Возвращает список пассажиров, которые путешествовали на самолетах указанной компании
+	/// </summary>
+	/// <param name="departureCity"></param>
+	/// <param name="arrivalCity"></param>
+	/// <returns></returns>
+	public IEnumerable<Trip> GetTripsFromCityToCity(string departureCity, string arrivalCity)
 	{
-		throw new NotImplementedException();
+		return trips.Where(trip => trip.ArrivalCity == arrivalCity && trip.DepartureCity == departureCity)
+			.ToList();
 	}
 
+	/// <summary>
+	/// Возвращает список пассажиров, которые путешествовали на самолетах указанной компании
+	/// </summary>
+	/// <param name="age"></param>
+	/// <returns></returns>
 	public List<Passenger> GetPassengersWithAgeAbove(int age)
 	{
-		throw new NotImplementedException();
+		return passengers.Where(passenger => passenger.Age > age).ToList();
 	}
 
+	/// <summary>
+	/// Возвращает поезку с максимальной ценой билета
+	/// </summary>
+	/// <returns></returns>
 	public Trip GetTripWithMaximumTicketPrice()
 	{
-		throw new NotImplementedException();
+		return trips.First(trip => trip.Id == passengerTrips
+							.OrderByDescending(passengerTrip => passengerTrip.TicketPrice).First().TripId);
 	}
 
+	/// <summary>
+	/// Возвращает пассажира с самым дорогим билетом
+	/// </summary>
+	/// <returns></returns>
 	public Passenger GetPassengerWithMostExpensiveTicket()
 	{
-		throw new NotImplementedException();
+		var maxTicketPrice = passengerTrips.Max(passengerTrip => passengerTrip.TicketPrice);
+		var passengerId = passengerTrips.First(passengerTrip => passengerTrip.TicketPrice == maxTicketPrice).PassengerId;
+		return passengers.First(passenger => passenger.Id == passengerId);
 	}
 
+	
+	/// <summary>
+	/// возвращает список компаний, у которых есть рейсы после указанной даты
+	/// </summary>
+	/// <param name="date"></param>
+	/// <returns></returns>
 	public List<Company> GetCompaniesWithTripsAfterDate(DateTime date)
 	{
-		throw new NotImplementedException();
+		return companies.Where(
+			company => trips.Any(trip => trip.CompanyId == company.Id && trip.DepartureTime > date)
+			).ToList(); 
 	}
 
+	
+	/// <summary>
+	/// Возвращает среднюю цену билета для указанной компании
+	/// </summary>
+	/// <param name="companyId"></param>
+	/// <returns></returns>
+	/// <exception cref="NotImplementedException"></exception>
 	public decimal GetAverageTicketPriceForCompany(int companyId)
 	{
-		throw new NotImplementedException();
+		List<PassengerTrip> passengerTripsForCompany = 
+			passengerTrips.Where(
+				passengerTrip => trips.Where(
+					trip => trip.CompanyId == companyId
+					).Any(trip => trip.Id == passengerTrip.TripId)
+			).ToList();
+		return passengerTripsForCompany.Average(passengerTrip => passengerTrip.TicketPrice);
 	}
 
 	public Passenger GetPassengerWithMostTrips()
@@ -56,9 +107,22 @@ public class ModelFunctions(
 		throw new NotImplementedException();
 	}
 
+	
+	/// <summary>
+	/// все пассажиры, у которых есть билеты на рейсы указанной компании
+	/// </summary>
+	/// <param name="i"></param>
+	/// <returns></returns>
 	public List<Passenger> GetPassengersWithTicketsForCompany(string i)
 	{
-		throw new NotImplementedException();
+		return passengers.Where(
+			passenger => 
+				passengerTrips.Where(
+						passengerTrip => trips.Where(
+							trip => trip.CompanyId == companies.First(company => company.Name == i).Id
+						).Any(trip => trip.Id == passengerTrip.TripId)
+					).Any(passengerTrip => passengerTrip.PassengerId == passenger.Id)
+			).ToList();
 	}
 
 	public (string, List<PassengerTrip>) GetPassengerCompanyInfo(int id)

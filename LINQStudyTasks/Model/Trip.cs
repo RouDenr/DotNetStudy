@@ -9,7 +9,6 @@ public class Trip
 	public string ArrivalCity { get; set; }
 	public DateTime DepartureTime { get; set; }
 	public DateTime ArrivalTime { get; set; }
-	public decimal TicketPrice { get; set; }
 	public string TicketClass { get; set; }
 
 	public int PassengerCapacity { get; set; }
