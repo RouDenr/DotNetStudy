@@ -232,7 +232,7 @@ public class LinqTests
     /// Сигнатура: public double GetAverageTicketPriceForCompany(int companyId)
     /// </summary>
     [Fact]
-    public void Task7_ReturnAverageTicketPriceForCompany()
+    public void Task8_ReturnAverageTicketPriceForCompany()
     {
         var result = _modelFunctions.GetAverageTicketPriceForCompany(1);
         Assert.Equal(225, result);
@@ -243,7 +243,7 @@ public class LinqTests
     /// Сигнатура: public Passenger GetPassengerWithMostTrips()
     /// </summary>
     [Fact]
-    public void Task8_ReturnPassengerWithMostTrips()
+    public void Task9_ReturnPassengerWithMostTrips()
     {
         var result = _modelFunctions.GetPassengerWithMostTrips();
         const string expected = "Emma Johnson";
@@ -254,7 +254,7 @@ public class LinqTests
     /// Условие: Вернуть список пассажиров на указанном рейсе<br/>
     /// Сигнатура: public List<Passenger> GetPassengersOnTrip(int tripId)
     [Fact]
-    public void Task9_ReturnPassengersOnTrip()
+    public void Task10_ReturnPassengersOnTrip()
     {
         var result = _modelFunctions.GetPassengersOnTrip(2);
         Assert.Single(result);
@@ -265,7 +265,7 @@ public class LinqTests
     /// Сигнатура: public PassengerInfo GetPassengerCompanyInfo(int passengerId, string companyName)
     /// </summary>
     [Fact]
-    public void Task10_ReturnPassengerCompanyInfo()
+    public void Task11_ReturnPassengerCompanyInfo()
     {
         // Возвращаемый тип tuple (string, List<PassengerTrip>)
         var result = _modelFunctions.GetPassengerCompanyInfo(1);
