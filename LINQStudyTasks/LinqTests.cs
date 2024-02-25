@@ -106,7 +106,12 @@ public class LinqTests
             {
                 Id = 5, TripId = 5, PassengerId = 4, SeatNumber = "E5", TicketPrice = 180, TicketClass = "Economy",
                 BoardingTime = new DateTime(2023, 10, 5, 11, 0, 0)
-            }
+            },
+            new PassengerTrip
+            {
+                Id = 6, TripId = 4, PassengerId = 2, SeatNumber = "F6", TicketPrice = 300, TicketClass = "Business",
+                BoardingTime = new DateTime(2023, 6, 1, 7, 0, 0)
+            },
         ];
 
         List<Passenger> passengers =
@@ -235,7 +240,7 @@ public class LinqTests
     public void Task8_ReturnAverageTicketPriceForCompany()
     {
         var result = _modelFunctions.GetAverageTicketPriceForCompany(1);
-        Assert.Equal(225, result);
+        Assert.Equal(250, result);
     }
 
     /// <summary>
