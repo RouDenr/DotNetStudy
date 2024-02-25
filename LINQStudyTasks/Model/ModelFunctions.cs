@@ -97,14 +97,27 @@ public class ModelFunctions(
 		return passengerTripsForCompany.Average(passengerTrip => passengerTrip.TicketPrice);
 	}
 
+	
+	/// <summary>
+	/// Возвращает пассажира с наибольшим количеством поездок
+	/// </summary>
+	/// <returns></returns>
+	/// <exception cref="NotImplementedException"></exception>
 	public Passenger GetPassengerWithMostTrips()
 	{
-		throw new NotImplementedException();
+		return passengers.First(passenger => passenger.Id == passengerTrips
+			.GroupBy(passengerTrip => passengerTrip.PassengerId)
+			.OrderByDescending(group => group.Count())
+			.First().Key);
 	}
 
 	public List<Passenger> GetPassengersOnTrip(int tripId)
 	{
-		throw new NotImplementedException();
+		return passengers.Where(
+			passenger => passengerTrips.Any(
+				passengerTrip => passengerTrip.TripId == tripId && passengerTrip.PassengerId == passenger.Id
+			)
+		).ToList();
 	}
 
 	
@@ -125,8 +138,13 @@ public class ModelFunctions(
 			).ToList();
 	}
 
-	public (string, List<PassengerTrip>) GetPassengerCompanyInfo(int id)
+	public List<PassengerTrip>GetPassengerCompanyInfo(int passengerId, string companyName)
 	{
-		throw new NotImplementedException();
+		return passengerTrips.Where(
+			passengerTrip => passengerTrip.PassengerId == passengerId && 
+				trips.Where(
+					trip => trip.CompanyId == companies.First(company => company.Name == companyName).Id
+				).Any(trip => trip.Id == passengerTrip.TripId)
+		).ToList();
 	}
 }

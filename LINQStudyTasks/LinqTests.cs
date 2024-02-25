@@ -270,13 +270,10 @@ public class LinqTests
     /// Сигнатура: public PassengerInfo GetPassengerCompanyInfo(int passengerId, string companyName)
     /// </summary>
     [Fact]
-    public void Task11_ReturnPassengerCompanyInfo()
+    public void Task11_ReturnAllTicketsForCompanyByPassenger()
     {
-        // Возвращаемый тип tuple (string, List<PassengerTrip>)
-        var result = _modelFunctions.GetPassengerCompanyInfo(1);
-        // Проверка имени компании
-        Assert.Equal("SkyHigh Airlines", result.Item1);
-        
+        var result = _modelFunctions.GetPassengerCompanyInfo(2, "SkyHigh Airlines");
+        Assert.Equal(2, result.Count);
     }
 
 }
